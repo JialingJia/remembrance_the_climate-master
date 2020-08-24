@@ -64,7 +64,7 @@ dataPromise.then(function (rows) {
 	var text_item_height = 400;
 	var text_wrap_width_title = 230;
 	var text_wrap_width_desc = 314;
-	
+
 	var startYear = data_by_year[0].year;
 	var count_year = data_by_year[data_by_year.length - 1].year - startYear;
 
@@ -82,13 +82,13 @@ dataPromise.then(function (rows) {
 		year_sub.push(data_by_year[i].year - data_by_year[i - 1].year);
 	}
 	console.log('each rotatiion degree=' + degrees)
-	
-	//add svg	
+
+	//add svg
 	var canvas = d3.select('.canvas')
 		.append('svg')
 		.attr('width', w)
 		.attr('height', h)
-		
+
 	//add wheel image
 	var wheel = canvas.append('g')
 		.attr('class','g-wheel')
@@ -126,10 +126,10 @@ dataPromise.then(function (rows) {
 				}
 				else{
 					return (start_dot_originalX * Math.cos(toRadians(rotate_degree)));
-				}	
+				}
 			}else{
 				return (start_dot_originalX * Math.cos(toRadians(rotate_degree)));
-			}	
+			}
 		})
 		.attr('cy',(d,i)=>{
 			var prevData = dots.data()[i-1];
@@ -155,10 +155,10 @@ dataPromise.then(function (rows) {
 					return start_dot_originalX * Math.sin(toRadians(rotate_degree)) + start_dot_originalY;
 				}
 			}
-		})	
+		})
 		.attr('r', dot_radius)
 		.style('transition', 'all 1s ease 0s')
-		.style('fill', 'rgb(255,255,255)');		
+		.style('fill', 'rgb(255,255,255)');
 
 	//labels
 	var labels = timeline.append('g')
@@ -187,7 +187,7 @@ dataPromise.then(function (rows) {
 		.text((d)=>{
 			return d.year;
 		})
-	
+
 	//text items
 	var text_item = canvas.append('g')
 		.selectAll('.text-item-g')
@@ -206,7 +206,7 @@ dataPromise.then(function (rows) {
 		.attr('width',`${text_item_width}px`)
 		.attr('height',`${text_item_height}px`)
 		.style('transition', 'transform .8s ease 0s, opacity .5s ease 0s')
-	
+
 	text_item
 		.append("tspan")
 		.text(d => d.city)
@@ -216,25 +216,25 @@ dataPromise.then(function (rows) {
 	text_item.append("tspan")
 		.text(d => d.title)
 		.attr('class','tspan-top')
-		.attr('id','text-title')	
+		.attr('id','text-title')
 		.attr('x', 0)
 		.attr('dy', '1em')
 		.call(wrap,1,1,text_wrap_width_title)
-	
+
 	text_item.append("tspan")
 		.attr('class','tspan-bottom')
 		.text(d => d.monday)
-		.attr('id','text-date')	
+		.attr('id','text-date')
 		.attr('x', 0)
 		.attr('y','108px')
-	
+
 	text_item.append("tspan")
 		.attr('class','tspan-bottom')
 		.text(d => d.desc)
-		.attr('id','text-desc')	
+		.attr('id','text-desc')
 		.attr('x', 0)
 		.call(wrap,1.7,1.2,text_wrap_width_desc)
-	
+
 	//fix the description part in a given width
 	function wrap(text, dy1, dy, width) {
 		text.each(function () {
@@ -251,7 +251,7 @@ dataPromise.then(function (rows) {
 							.attr("y", y)
 							//.attr("dy", "2em");
 							.attr("dy", dy1 + "em");
-			
+
 			while (word = words.pop()) {
 				line.push(word);
 				tspan.text(line.join(" "));
@@ -267,11 +267,11 @@ dataPromise.then(function (rows) {
 				}
 			}
 		});
-	}	
-	
+	}
+
 	//onboard animation
 	//wheel
-	//wheel.attr('transform','translate(-412,50) rotate(90 412 412)')	
+	//wheel.attr('transform','translate(-412,50) rotate(90 412 412)')
 	wheel.style('transform-origin','412px 412px')
 		.style('transform', `translate(-412px, 50px) rotate(90deg)`);
 	//dots and labels
@@ -292,7 +292,7 @@ dataPromise.then(function (rows) {
 		.style('transition-delay','1s')
 		.style('opacity',.7)
 		.style('font-family','Trade Bold');
-	//first text item 
+	//first text item
 	let fisrt_content = d3.select('#text-item-g-0');
 	fisrt_content
 		.style('transform-origin','0 0')
@@ -317,7 +317,7 @@ dataPromise.then(function (rows) {
 
 		// rotate to next dot
 		if (up_down == 'down') {
-			//clear onboarding delay 
+			//clear onboarding delay
 			first_label.style('transition-delay','0s');
 			first_dot.style('transition-delay','0s');
 
@@ -329,8 +329,8 @@ dataPromise.then(function (rows) {
 			let current_word_label = d3.select('#text-item-g-'+index);
 			console.log('now',(index-1))
 			console.log('down',index);
-			
-			last_word_label//rotate out	
+
+			last_word_label//rotate out
 				.style('transform-origin','0px 0px')
 				.style('transform', `translate(20px, 360px) rotate(-180deg)`)
 				.style('opacity',0)
@@ -384,19 +384,19 @@ dataPromise.then(function (rows) {
 
 		// rotate to previous dot
 		if (up_down == 'up') {
-			//clear onboarding delay 
+			//clear onboarding delay
 			first_label.style('transition-delay','0s');
 			first_dot.style('transition-delay','0s');
 
 			rotationAngle = degrees[index + 1];
 			wheelAngle = 18;
 
-			//switch text items 
+			//switch text items
 			let last_word_label = d3.select('#text-item-g-'+(index+1))
 			let current_word_label = d3.select('#text-item-g-'+(index))
 			console.log('now',(index+1))
 			console.log('up',(index));
-		
+
 			last_word_label//rotate out
 				.style('transform-origin','0px 0px')
 				.style('transform', `translate(20px, 360px) rotate(180deg)`)
@@ -446,7 +446,7 @@ dataPromise.then(function (rows) {
 		d3.select('#label-' + index)
 			.style('opacity',.8)
 			.style('font-family','Trade Bold');
-		
+
 		wheel_sumAngle += wheelAngle;
 		sumAngle += rotationAngle;
 
@@ -455,21 +455,21 @@ dataPromise.then(function (rows) {
 		currentWheel
 			.style('transform-origin','412px 412px')
 			.style('transform', `translate(-412px, 50px) rotate(${wheel_sumAngle}deg)`);
-	
+
 
 	// dynamically load json file to the modal
 
 	$(document).ready(function(){
 		$('#btn_more').on('click',function(){
 			$('#exampleModal1').modal({show:true});
-			$.ajax({ 
-				type: "GET", 
+			$.ajax({
+				type: "GET",
 				url: ".../data/data.json",
 				dataType: 'json',
-				async: false,
+				// async: false,
 				success: function(response){
 					console.log(response)
-					$.each(response.result, function(event){
+					$.each(response.result, function(i,event){
 						console.log(event.main)
 						if (data[index].year = event.year){
 							$("#exampleModal1").find('#more-main').text(event.main);
@@ -483,15 +483,15 @@ dataPromise.then(function (rows) {
 
 
 	}
-	
+
 
 	//keydown-scroll
 	document.addEventListener("keydown", function(event) {
 		event.preventDefault();
-		
+
 		const key = event.key; // "ArrowUp", or "ArrowDown"
-		
-		switch (key) { 
+
+		switch (key) {
 		  case "ArrowUp":
 			// Up pressed
 			keyUp();
@@ -586,10 +586,10 @@ dataPromise.then(function (rows) {
 	// 	};
 	// }
 
-	// rotateWheel { 
-	// 	rotating = true; 
+	// rotateWheel {
+	// 	rotating = true;
 	// 	//fires animations
-	// 	//after these animations are done they should automatically call 
+	// 	//after these animations are done they should automatically call
 	// 	function(){ rotating = false;}
 	// }
 
