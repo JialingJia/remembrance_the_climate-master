@@ -310,6 +310,7 @@ dataPromise.then(function (rows) {
 	let old_url = window.location.href;
 
 	function rotation_def(index, up_down, data) {
+
 		if(topRight) return;
 
 		let rotationAngle = 0;
@@ -456,6 +457,7 @@ dataPromise.then(function (rows) {
 			.style('transform-origin','412px 412px')
 			.style('transform', `translate(-412px, 50px) rotate(${wheel_sumAngle}deg)`);
 
+		var new_year = data[index].year
 			$(document).ready(function(){
 				$('#btn_more').on('click',function(){
 					// $('#exampleModal1').modal({show:true});
@@ -463,12 +465,10 @@ dataPromise.then(function (rows) {
 						type: "GET",
 						url: "data/data.json",
 						dataType: 'json',
-						// async: false,
 						success: function(response){
-							console.log(response)
 							$.each(response.result, function(i,event){
-								console.log(event.main)
-								if (data[index].year = event.year){
+								if (event.date == new_year){
+									console.log(new_year)
 									$("#exampleModal1").find('#more-main').text(event.main);
 									$("#exampleModal1").find('#notes').text(event.note);
 								}
@@ -477,7 +477,6 @@ dataPromise.then(function (rows) {
 					})
 				})
 			})
-
 
 	}
 
@@ -568,12 +567,22 @@ dataPromise.then(function (rows) {
 	window.onmousewheel = document.onmousewheel = throttle(scrollFunc,800);
 
 	//disable scroll after clicking the button
-	document.getElementById('btn_more').onclick = function(e){
+	$('#exampleModal1').on('shown.bs.modal', function (e){
 		topRight = true;
-	}
-	document.getElementById('btn_about').onclick = function(e){
+	})
+
+	$('#exampleModal2').on('shown.bs.modal', function (e){
 		topRight = true;
-	}
+	})
+
+	$('#exampleModal1').on('hidden.bs.modal', function (e){
+		topRight = false;
+	})
+
+	$('#exampleModal2').on('hidden.bs.modal', function (e){
+		topRight = false;
+	})
+
 
 	// var rotating = false;
 
