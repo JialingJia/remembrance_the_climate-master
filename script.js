@@ -456,31 +456,29 @@ dataPromise.then(function (rows) {
 			.style('transform-origin','412px 412px')
 			.style('transform', `translate(-412px, 50px) rotate(${wheel_sumAngle}deg)`);
 
+			// dynamically load json file to the modal
 
-	// dynamically load json file to the modal
-
-	$(document).ready(function(){
-		$('#btn_more').on('click',function(){
-			$('#exampleModal1').modal({show:true});
-			$.ajax({
-				type: "GET",
-				url: ".../data/data.json",
-				dataType: 'json',
-				// async: false,
-				success: function(response){
-					console.log(response)
-					$.each(response.result, function(i,event){
-						console.log(event.main)
-						if (data[index].year = event.year){
-							$("#exampleModal1").find('#more-main').text(event.main);
-							$("#exampleModal1").find('#note').text(event.note);
+			$(document).ready(function(){
+				$('#btn_more').on('click',function(){
+					// $('#exampleModal1').modal({show:true});
+					$.ajax({
+						type: "GET",
+						url: "data/data.json",
+						dataType: 'json',
+						// async: false,
+						success: function(response){
+							console.log(response)
+							$.each(response.result, function(i,event){
+								console.log(event.main)
+								if (data[index].year = event.year){
+									$("#exampleModal1").find('#more-main').text(event.main);
+									$("#exampleModal1").find('#notes').text(event.note);
+								}
+								})
 						}
-					  })
-				}
+					})
+				})
 			})
-		})
-	})
-
 
 	}
 

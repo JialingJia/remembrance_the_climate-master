@@ -54,7 +54,7 @@ body{
 	margin-bottom: 0;
 	fill: #fff;
 	-webkit-font-smoothing: antialiased;
-	
+
 }
 
 #text-title{
@@ -140,7 +140,7 @@ body{
 	vertical-align: middle;
 	cursor: pointer;
 	min-height: 1em;
-	
+
 }
 
 .btn{
@@ -155,13 +155,17 @@ body{
 	text-align: center;
 	vertical-align: middle;
 	cursor: pointer;
-	min-height: 1em;	
+	min-height: 1em;
 }
 
 /* modal */
+.modal {
+  overflow-y:auto;
+}
+
 .modal-dialog {
 	position:fixed;
-	margin: 2% 1.75rem 2% 1.75rem; 
+	margin: 2% 1.75rem 2% 1.75rem;
 	max-width: 100%;
 	min-height: 90%;
 	height: 100%;
@@ -329,17 +333,16 @@ svg .g-wheel
 	top: 20px;
 	right: 20px;
 }
-/* 
-@media (max-width: 414px) { 
+/*
+@media (max-width: 414px) {
 	#wheel-img{
-		
+
 		width: 400px;
 		height: 400px;
 		transition: all 1s ease 0s;
 
 		opacity: .8;
 		z-index: -1999;
-		
+
 	}
 }  */
-
