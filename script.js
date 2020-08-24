@@ -456,8 +456,6 @@ dataPromise.then(function (rows) {
 			.style('transform-origin','412px 412px')
 			.style('transform', `translate(-412px, 50px) rotate(${wheel_sumAngle}deg)`);
 
-			// dynamically load json file to the modal
-
 			$(document).ready(function(){
 				$('#btn_more').on('click',function(){
 					// $('#exampleModal1').modal({show:true});
@@ -479,6 +477,7 @@ dataPromise.then(function (rows) {
 					})
 				})
 			})
+
 
 	}
 
