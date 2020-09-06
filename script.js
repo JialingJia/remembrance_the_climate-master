@@ -320,7 +320,7 @@ dataPromise.then(function (rows) {
 			var index = 0;
 			var sumAngle = 0
 			var wheel_sumAngle = 90;
-			let old_url = window.location.href;
+			let old_url = window.location.origin;
 
 			function rotation_def(index, up_down, data) {
 
