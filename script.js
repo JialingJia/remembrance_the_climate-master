@@ -54,7 +54,7 @@ var topRight = false;
 dataPromise.then(function (rows) {
 
 			//console.log(rows);
-			
+
 
 			//data manipulation
 			//get sorted data by year
@@ -320,7 +320,7 @@ dataPromise.then(function (rows) {
 			var index = 0;
 			var sumAngle = 0
 			var wheel_sumAngle = 90;
-			let old_url = window.location.origin;
+			let old_url = window.location.pathname;
 
 			function rotation_def(index, up_down, data) {
 
