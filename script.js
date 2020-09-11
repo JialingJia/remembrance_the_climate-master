@@ -220,19 +220,21 @@ dataPromise.then(function (rows) {
 				.attr('height', `${text_item_height}px`)
 				.style('transition', 'transform .8s ease 0s, opacity .5s ease 0s')
 
-			text_item
-				.append("tspan")
-				.text(d => d.city)
-				.attr('class', 'tspan-top')
-				.attr('id', 'text-id')
-
 			text_item.append("tspan")
 				.text(d => d.title)
 				.attr('class', 'tspan-top')
 				.attr('id', 'text-title')
 				.attr('x', 0)
-				.attr('dy', '1em')
-				.call(wrap, 1, 1, text_wrap_width_title)
+				.attr('dy', '2em')
+				.call(wrapUpper, 2, 1, text_wrap_width_title)
+
+			text_item.append("tspan")
+				.text(d => d.city)
+				.attr('class', 'tspan-top')
+				.attr('id', 'text-id')
+				.attr('x',0)
+				.attr('dy','-2em')
+				.call(reposition)
 
 			text_item.append("tspan")
 				.attr('class', 'tspan-bottom')
@@ -246,10 +248,20 @@ dataPromise.then(function (rows) {
 				.text(d => d.desc)
 				.attr('id', 'text-desc')
 				.attr('x', 0)
-				.call(wrap, 1.7, 1.2, text_wrap_width_desc)
+				.call(wrapBelow, 1.7, 1.2, text_wrap_width_desc)
 
-			//fix the description part in a given width
-			function wrap(text, dy1, dy, width) {
+			// realign text id with text description
+			function reposition(text){
+				text.each(function(){
+					if ($(this).prev("tspan").find("#wrap").length != 0 ){
+						console.log('hello');
+							$(this).attr("dy", "-3.5em");
+							}
+				})
+			}
+
+			//fix the description part above the middle line in a given width
+			function wrapUpper(text, dy1, dy, width) {
 				text.each(function () {
 					var text = d3.select(this),
 						words = text.text().split(/\s+/).reverse(),
@@ -269,6 +281,13 @@ dataPromise.then(function (rows) {
 						line.push(word);
 						tspan.text(line.join(" "));
 						if (tspan.node().getComputedTextLength() > width) {
+							tspan = text.text(null)
+							.append("tspan")
+							.attr("x", x)
+							.attr("y", y)
+							//.attr("dy", "2em");
+							.attr("dy", dy1-1 + "em");
+
 							line.pop();
 							tspan.text(line.join(" "));
 							line = [word];
@@ -276,7 +295,46 @@ dataPromise.then(function (rows) {
 								.attr("x", x)
 								.attr("y", y)
 								.attr("dy", lineHeight + "em")
-								.text(word);
+								.text(word)
+								.attr('id','wrap');
+							$('tspan').css('dominant-baseline','baseline')
+						}
+						else{
+							// tspan.style('dominant-baseline','hanging')
+						}
+					}
+				});
+			}
+
+			//fix the description part in a given width
+			function wrapBelow(text, dy1, dy, width) {
+				text.each(function () {
+					var text = d3.select(this),
+						words = text.text().split(/\s+/).reverse(),
+						word,
+						line = [],
+						lineHeight = dy, //ems
+						x = text.attr("x"),
+						y = text.attr("y"),
+						tspan = text.text(null)
+									.append("tspan")
+									.attr("x", x)
+									.attr("y", y)
+									//.attr("dy", "2em");
+									.attr("dy", dy1 + "em");
+
+					while (word = words.pop()) {
+						line.push(word);
+						tspan.text(line.join(" "));
+						if (tspan.node().getComputedTextLength() > width) {
+							line.pop();
+							tspan.text(line.join(" "));
+							line = [word];
+							tspan = text.append("tspan")
+										.attr("x", x)
+										.attr("y", y)
+										.attr("dy", lineHeight + "em")
+										.text(word);
 						}
 					}
 				});
