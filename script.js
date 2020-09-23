@@ -68,7 +68,7 @@ dataPromise.then(function (rows) {
 
 			var text_item_width = 400;
 			var text_item_height = 400;
-			var text_wrap_width_title = 230;
+			var text_wrap_width_title = 200;
 			var text_wrap_width_desc = 314;
 
 			var startYear = data_by_year[0].year;
@@ -226,7 +226,7 @@ dataPromise.then(function (rows) {
 				.attr('id', 'text-title')
 				.attr('x', 0)
 				.attr('dy', '2em')
-				.call(wrapUpper, 2, 1, text_wrap_width_title)
+				.call(wrapUpper, 2, 0.85, text_wrap_width_title)
 
 			text_item.append("tspan")
 				.text(d => d.city)
@@ -241,7 +241,7 @@ dataPromise.then(function (rows) {
 				.text(d => d.monday)
 				.attr('id', 'text-date')
 				.attr('x', 0)
-				.attr('y', '108px')
+				.attr('y', '5em')
 
 			text_item.append("tspan")
 				.attr('class', 'tspan-bottom')
@@ -388,7 +388,7 @@ dataPromise.then(function (rows) {
 				let wheelAngle = 0;
 
 				// rotate to next dot
-				if (up_down == 'down') {
+				if (up_down == 'up') {
 					//clear onboarding delay
 					first_label.style('transition-delay', '0s');
 					first_dot.style('transition-delay', '0s');
@@ -455,7 +455,7 @@ dataPromise.then(function (rows) {
 				}
 
 				// rotate to previous dot
-				if (up_down == 'up') {
+				if (up_down == 'down') {
 					//clear onboarding delay
 					first_label.style('transition-delay', '0s');
 					first_dot.style('transition-delay', '0s');
@@ -581,29 +581,29 @@ dataPromise.then(function (rows) {
 					function keyUp() {
 						if (index - 1 >= 0) {
 							index--;
-							rotation_def(index, 'up', data_by_year);
+							rotation_def(index, 'down', data_by_year);
 						}
 					}
 
 					function keyDown() {
 						if (index + 1 < degrees.length) {
 							index++;
-							rotation_def(index, 'down', data_by_year);
+							rotation_def(index, 'up', data_by_year);
 						}
 					}
 
 					//fire scrolling
 					function move(delta) {
-						if (delta < 0) {
+						if (delta > 0) {
 							if (index - 1 >= 0) {
 								index--;
-								rotation_def(index, 'up', data_by_year);
+								rotation_def(index, 'down', data_by_year);
 
 							}
-						} else if (delta > 0) {
+						} else if (delta < 0) {
 							if (index + 1 < degrees.length) {
 								index++;
-								rotation_def(index, 'down', data_by_year);
+								rotation_def(index, 'up', data_by_year);
 								//console.log(index);
 							}
 						}
@@ -646,9 +646,9 @@ dataPromise.then(function (rows) {
 					}
 
 					if (document.addEventListener) {
-						document.addEventListener('DOMMouseScroll', throttle(scrollFunc, 800), false);
+						document.addEventListener('DOMMouseScroll', throttle(scrollFunc, 500), false);
 					}
-					window.onmousewheel = document.onmousewheel = throttle(scrollFunc, 800);
+					window.onmousewheel = document.onmousewheel = throttle(scrollFunc, 500);
 
 					//disable scroll after clicking the button
 					$('#exampleModal1').on('shown.bs.modal', function (e) {
