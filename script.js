@@ -382,8 +382,6 @@ dataPromise.then(function (rows) {
 
 			function rotation_def(index, up_down, data) {
 
-				if (topRight) return;
-
 				let rotationAngle = 0;
 				let wheelAngle = 0;
 
@@ -612,6 +610,8 @@ dataPromise.then(function (rows) {
 					var num_m = 0;
 
 					var scrollFunc = function (e) {
+						if (topRight) return;
+
 						e = e || window.event;
 						var delta = 0;
 
@@ -646,12 +646,12 @@ dataPromise.then(function (rows) {
 					}
 
 					if (document.addEventListener) {
-						document.addEventListener('DOMMouseScroll', throttle(scrollFunc, 500), false);
+						document.addEventListener('DOMMouseScroll', throttle(scrollFunc, 200), false);
 					}
-					window.onmousewheel = document.onmousewheel = throttle(scrollFunc, 500);
+					window.onmousewheel = document.onmousewheel = throttle(scrollFunc, 200);
 
 					//disable scroll after clicking the button
-					$('#exampleModal1').on('shown.bs.modal', function (e) {
+					$('#exampleModal1').on('shown.bs.modal', function () {
 						topRight = true;
 					})
 
@@ -659,12 +659,11 @@ dataPromise.then(function (rows) {
 						topRight = true;
 					})
 
-					$('#exampleModal1').on('hide.bs.modal', function (e) {
+					$('#exampleModal1').on('hidden.bs.modal', function (e) {
 						topRight = false;
-						// ;
 					})
 
-					$('#exampleModal2').on('hide.bs.modal', function (e) {
+					$('#exampleModal2').on('hidden.bs.modal', function (e) {
 						topRight = false;
 					})
 
