@@ -653,15 +653,15 @@ dataPromise.then(function(rows) {
     topRight = true;
   })
 
-  $('#exampleModal2').on('shown.bs.modal', function(e) {
+  $('#exampleModal2').on('shown.bs.modal', function() {
     topRight = true;
   })
 
-  $('#exampleModal1').on('hidden.bs.modal', function(e) {
+  $('#exampleModal1').on('hidden.bs.modal', function() {
     topRight = false;
   })
 
-  $('#exampleModal2').on('hidden.bs.modal', function(e) {
+  $('#exampleModal2').on('hidden.bs.modal', function() {
     topRight = false;
   })
 
